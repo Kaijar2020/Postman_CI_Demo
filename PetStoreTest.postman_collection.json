@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "191bf1b8-803c-4ebb-b577-0002b27f53aa",
+		"name": "PetStoreTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33522099"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomeNum = Math.floor(Math.random()*100+1);\r",
+							"var randomStr = \"sun\"+Math.random().toString(36).substring(2);\r",
+							"\r",
+							"pm.environment.set(\"id\", randomeNum);\r",
+							"pm.collectionVariables.set(\"userName\", randomStr);\r",
+							"pm.collectionVariables.set(\"firstName\", randomStr);\r",
+							"pm.collectionVariables.set(\"lastName\", randomStr+\"kh\");\r",
+							"pm.collectionVariables.set(\"email\", randomStr+\"@yoopmail.com\");\r",
+							"pm.collectionVariables.set(\"password\", randomeNum);\r",
+							"pm.collectionVariables.set(\"phone\", randomeNum);\r",
+							"pm.collectionVariables.set(\"userStatus\", 0);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check status Code\",()=>{\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"})\r",
+							"pm.collectionVariables.unset('id');"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{id}},\r\n  \"username\": \"{{userName}}\",\r\n  \"firstName\": \"{{firstName}}\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"phone\": \"{{phone}}\",\r\n  \"userStatus\": {{userStatus}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_qa_env}}/user",
+					"host": [
+						"{{url_qa_env}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check status Code\",()=>{\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test('Test the data type of the response',()=>{\r",
+							"    pm.expect(jsonData).to.be.an(\"object\");\r",
+							"    pm.expect(jsonData.id).to.be.a('number');\r",
+							"    pm.expect(jsonData.username).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.firstName).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.lastName).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.email).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.password).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.phone).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.userStatus).to.be.a('number');\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_qa_env}}/user/{{firstName}}",
+					"host": [
+						"{{url_qa_env}}"
+					],
+					"path": [
+						"user",
+						"{{firstName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomeNum = Math.floor(Math.random()*100+1);\r",
+							"var randomStr = \"sun\"+Math.random().toString(36).substring(2);\r",
+							"\r",
+							"pm.collectionVariables.set(\"lastName\", \"Sheikh\"+\" \"+randomStr);\r",
+							"pm.collectionVariables.set(\"password\", randomeNum+\"123456\");\r",
+							"pm.collectionVariables.set(\"phone\", randomeNum+\"123456987\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The Status Code\",()=>{\r",
+							"    pm.response.to.have.status('200');\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_qa_env}}/user/{{userName}}",
+					"host": [
+						"{{url_qa_env}}"
+					],
+					"path": [
+						"user",
+						"{{userName}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "userName",
+			"value": ""
+		},
+		{
+			"key": "firstName",
+			"value": ""
+		},
+		{
+			"key": "lastName",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		},
+		{
+			"key": "phone",
+			"value": ""
+		},
+		{
+			"key": "userStatus",
+			"value": ""
+		}
+	]
+}
