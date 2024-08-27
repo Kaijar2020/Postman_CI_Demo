@@ -33,12 +33,29 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Check status Code\",()=>{\r",
+							"pm.test(\"1.Check status Code\",()=>{\r",
 							"\r",
 							"    pm.response.to.have.status(200);\r",
 							"\r",
 							"})\r",
-							"pm.collectionVariables.unset('id');"
+							"pm.collectionVariables.unset('id');\r",
+							"\r",
+							"// Validate that the response time is less than 500ms\r",
+							"pm.test(\"2.Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"// Check if the response body is in JSON format\r",
+							"pm.test(\"3.Response is JSON\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"// Validate that an HTTP header exists and has a specific value\r",
+							"pm.test(\"4.Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -86,12 +103,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Check status Code\",()=>{\r",
+							"pm.test(\"1.Check status Code\",()=>{\r",
 							"\r",
 							"    pm.response.to.have.status(200);\r",
 							"})\r",
 							"const jsonData = pm.response.json();\r",
-							"pm.test('Test the data type of the response',()=>{\r",
+							"pm.test('2.Test the data type of the response',()=>{\r",
 							"    pm.expect(jsonData).to.be.an(\"object\");\r",
 							"    pm.expect(jsonData.id).to.be.a('number');\r",
 							"    pm.expect(jsonData.username).to.be.a(\"string\");\r",
@@ -101,7 +118,18 @@
 							"    pm.expect(jsonData.password).to.be.a(\"string\");\r",
 							"    pm.expect(jsonData.phone).to.be.a(\"string\");\r",
 							"    pm.expect(jsonData.userStatus).to.be.a('number');\r",
-							"})"
+							"})\r",
+							"\r",
+							"\r",
+							"// Validate that an HTTP header exists and has a specific value\r",
+							"pm.test(\"3.Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"// Validate that the response time is less than 500ms\r",
+							"pm.test(\"4.Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -146,9 +174,20 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"The Status Code\",()=>{\r",
+							"pm.test(\"1.The Status Code\",()=>{\r",
 							"    pm.response.to.have.status('200');\r",
-							"})"
+							"})\r",
+							"\r",
+							"// Validate that the response time is less than 500ms\r",
+							"pm.test(\"2.Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Validate that an HTTP header exists and has a specific value\r",
+							"pm.test(\"3.Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});"
 						],
 						"type": "text/javascript",
 						"packages": {}
